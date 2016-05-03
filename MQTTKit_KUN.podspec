@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.name         = "MQTTKit_KUN"
   s.version      = "0.0.1"
-  s.summary      = "A short description of MQTTKit_KUN."
+  s.summary      = "MQTTKit with encryption certificate."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -25,6 +25,7 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
+ 					 Add supports for MQTT with encryption certificate.
                    DESC
 
   s.homepage     = "https://github.com/wenkun/MQTTKit_KUN"
@@ -65,6 +66,9 @@ Pod::Spec.new do |s|
 
   # s.platform     = :ios
   s.platform     = :ios, "6.0"
+  
+  s.ios.deployment_target = "6.0"
+  s.osx.platform = :osx, '10.9'
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -79,7 +83,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/wenkun/MQTTKit_KUN.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/wenkun/MQTTKit_KUN.git", :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -90,9 +94,12 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = 'MQTTKit_KUN/*'
+#   s.source_files  = "MQTTKit_KUN/**/*.{h,m,c}"
+  s.source_files  = 'libmosquitto/*.{h,c}', 'MQTTKit/*.{h,m}'
+#   s.source_files  = "MQTTKit_KUN/*"
 #   s.exclude_files = "Classes/Exclude"
 
+  s.public_header_files = 'MQTTKit/MQTTKit.h'
   # s.public_header_files = "Classes/**/*.h"
 
 

@@ -74,19 +74,9 @@
 
 @implementation MQTTClient
 
-#pragma mark - mosquitto callback methods
 
-NSString *keyFilePwd;
-int pw_callback(char *buf, int size, int rwflag, void *userdata)
-{
-    if (keyFilePwd.length > 0 && size >= keyFilePwd.length) {
-        const char *cstrKeyPwd = [keyFilePwd cStringUsingEncoding:NSASCIIStringEncoding];
-        buf = memcpy(buf, cstrKeyPwd, keyFilePwd.length);
-        return keyFilePwd.length;
-    }
-    
-    return 0;
-}
+
+#pragma mark - mosquitto callback methods
 
 static void on_connect(struct mosquitto *mosq, void *obj, int rc)
 {
@@ -249,12 +239,7 @@ static void on_unsubscribe(struct mosquitto *mosq, void *obj, int message_id)
     // FIXME: check for errors
     mosquitto_username_pw_set(mosq, cstrUsername, cstrPassword);
     mosquitto_reconnect_delay_set(mosq, self.reconnectDelay, self.reconnectDelayMax, self.reconnectExponentialBackoff);
-//    if (self.cafile && mosquitto_tls_set(mosq, [self.cafile cStringUsingEncoding:NSUTF8StringEncoding], [self.capath cStringUsingEncoding:NSUTF8StringEncoding], [self.certfile cStringUsingEncoding:NSUTF8StringEncoding], [self.keyfile cStringUsingEncoding:NSUTF8StringEncoding] , NULL)) {
-//        NSLog(@"error setting up TLS");
-//    }
-    
-    keyFilePwd = self.keyPwd;
-    if (self.cafile && mosquitto_tls_set(mosq, [self.cafile cStringUsingEncoding:NSUTF8StringEncoding], [self.capath cStringUsingEncoding:NSUTF8StringEncoding], [self.certfile cStringUsingEncoding:NSUTF8StringEncoding], [self.keyfile cStringUsingEncoding:NSUTF8StringEncoding] , pw_callback)) {
+    if (self.cafile && mosquitto_tls_set(mosq, [self.cafile cStringUsingEncoding:NSUTF8StringEncoding], [self.capath cStringUsingEncoding:NSUTF8StringEncoding], [self.certfile cStringUsingEncoding:NSUTF8StringEncoding], [self.keyfile cStringUsingEncoding:NSUTF8StringEncoding] , NULL)) {
         NSLog(@"error setting up TLS");
     }
     // add tls insecure set

@@ -856,7 +856,7 @@ int mosquitto_loop(struct mosquitto *mosq, int timeout, int max_packets)
 int mosquitto_loop_forever(struct mosquitto *mosq, int timeout, int max_packets)
 {
 	int run = 1;
-	int rc;
+	int rc = 0;
 	unsigned int reconnects = 0;
 	unsigned long reconnect_delay;
 
@@ -976,7 +976,7 @@ static int _mosquitto_loop_rc_handle(struct mosquitto *mosq, int rc)
 
 int mosquitto_loop_read(struct mosquitto *mosq, int max_packets)
 {
-	int rc;
+	int rc = 0;
 	int i;
 	if(max_packets < 1) return MOSQ_ERR_INVAL;
 
@@ -998,7 +998,7 @@ int mosquitto_loop_read(struct mosquitto *mosq, int max_packets)
 
 int mosquitto_loop_write(struct mosquitto *mosq, int max_packets)
 {
-	int rc;
+	int rc = 0;
 	int i;
 	if(max_packets < 1) return MOSQ_ERR_INVAL;
 
@@ -1143,7 +1143,7 @@ const char *mosquitto_connack_string(int connack_code)
 
 int mosquitto_sub_topic_tokenise(const char *subtopic, char ***topics, int *count)
 {
-	int len;
+	unsigned long len;
 	int hier_count = 1;
 	int start, stop;
 	int hier;
